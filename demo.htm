@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Abuse Reporting Prototype</title>
+  <title>Abuse Reporting Prototype — Cleaned</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
@@ -21,60 +21,187 @@
     .emergency { background: #ffe6e6; padding: 10px; border-radius: 6px; }
     .summary p { margin: 5px 0; }
     ul { margin: 5px 0 0 20px; }
+
+#progressContainer {
+  width: 100%;
+  background-color: #eee;
+  border-radius: 6px;
+  margin: 20px 0;
+  height: 15px;
+  overflow: hidden;
+}
+
+#progressBar {
+  height: 100%;
+  width: 0%;
+  background-color: #4CAF50; /* green bar */
+  transition: width 0.3s ease;
+}
+
+.preview-item {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 5px;
+  text-align: center;
+  font-size: 12px;
+  max-width: 120px;
+}
+.preview-item img,
+.preview-item video {
+  max-width: 100px;
+  max-height: 100px;
+  display: block;
+  margin: 0 auto 5px;
+  border-radius: 4px;
+}
+.preview-item audio {
+  width: 100px;
+}
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <header>
-    <h1>SafeReport App</h1>
+    <h1>Pupil Protect</h1>
     <div>
-      <select><option>EN</option><option>Xhosa</option><option>Zulu</option></select>
+      <select><option>English</option><!--<option>(pending)</option><option>(pending)</option>--></select>
       <button onclick="window.location='https://www.google.com'">Quick Exit</button>
     </div>
   </header>
 
+<div id="progressContainer">
+  <div id="progressBar"></div>
+</div>
+
   <main>
-    <!-- STEP 1 -->
-    <section class="step" id="step1">
-      <div class="card">
-        <h2>Welcome & Safety</h2>
-        <p>Use this app to report sexual or physical abuse directly to your district office.<br>
-        You’ll receive a ticket number to track your case.<br>
-        If you are in danger right now, please call the emergency numbers below.</p>
-        <div class="emergency">
-          <p><b>10111</b> — Police Emergency<br>
-          <b>116</b> — Childline SA</p>
-          <details>
-            <summary>Provincial Safeguarding Numbers</summary>
-            <ul>
-              <li>Eastern Cape — 0800 428 428 / SMS "help" to 31531</li>
-              <li>Western Cape — 0800 220 250</li>
-              <li>KwaZulu-Natal — 0800 005 250</li>
-              <li>Gauteng — 0800 428 428</li>
-              <li>Free State — 0800 228 822</li>
-              <li>Northern Cape — 0800 228 822</li>
-              <li>Limpopo — 0800 222 222</li>
-              <li>Mpumalanga — 0800 222 111</li>
-              <li>North West — 0800 220 250</li>
-            </ul>
-          </details>
-        </div>
-        <div class="buttons">
-          <span></span>
-          <button class="primary" onclick="nextStep(2)">Next</button>
-        </div>
-      </div>
-    </section>
+ <!-- STEP 1 -->
+<section class="step" id="step1">
+  <div class="card">
+    <h2>Welcome & Safety</h2>
+    <p><b>Prototype Notice:</b> This is a demonstration version and not a live reporting tool.<br>
+      Do not submit real or urgent reports here.<br>
+      Use this app to see how you could report sexual or physical abuse directly to your district office.<br>
+      You will receive a sample ticket number to track your case.<br>
+      If you are in danger right now, please call the emergency numbers below.</p>
+    
+    <!-- Emergency contacts preserved -->
+    <div class="emergency">
+      <fieldset style="border:1px solid #e00; border-radius:6px; padding:10px; margin-bottom:15px; background:#ffe6e6;">
+        <legend style="font-weight:bold; color:#e00;">Emergency Contacts</legend>
+        <table style="width:100%; border-collapse:collapse;">
+          <tr>
+            <th style="text-align:left;">Service</th>
+            <th style="text-align:left;">Number</th>
+          </tr>
+          <tr>
+            <td>Police Emergency</td>
+            <td><a href="tel:10111">10111</a></td>
+          </tr>
+          <tr>
+            <td>Childline SA</td>
+            <td><a href="tel:116">116</a></td>
+          </tr>
+          <tr>
+            <th colspan="2" style="text-align:left; padding-top:10px;">Provincial Safeguarding Numbers</th>
+          </tr>
+          <tr>
+            <td>Eastern Cape</td>
+            <td><a href="tel:+27436055000">(043) 605 5000</a></td>
+          </tr>
+          <tr>
+            <td>Western Cape</td>
+            <td>
+              <a href="tel:+27214833858">(021) 483 3858</a> /
+              <a href="tel:+27214833765">3765</a> /
+              <a href="tel:+27214833158">3158</a> /
+              <a href="tel:+27214835445">5445</a>
+            </td>
+          </tr>
+          <tr>
+            <td>KwaZulu-Natal</td>
+            <td><a href="tel:+27332645400">(033) 264 5400</a></td>
+          </tr>
+          <tr>
+            <td>Gauteng</td>
+            <td>
+              <a href="tel:+27113557687">(011) 355 7687</a> /
+              <a href="tel:+27113557977">7977</a> /
+              <a href="tel:+27113557878">7878</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Free State</td>
+            <td>
+              <a href="tel:+27514000302">(051) 400 0302</a> /
+              <a href="tel:+27514000304">0304</a> /
+              <a href="tel:+27514000307">0307</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Northern Cape</td>
+            <td><a href="tel:+27538075600">(053) 807 5600</a></td>
+          </tr>
+          <tr>
+            <td>Limpopo</td>
+            <td>
+              <a href="tel:+27152936004">(015) 293 6004</a> /
+              <a href="tel:+27152936054">6054</a> /
+              <a href="tel:+27152936011">6011</a> /
+              <a href="tel:+27152936053">6053</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Mpumalanga</td>
+            <td>
+              <a href="tel:+27137663098">(013) 766 3098</a> /
+              <a href="tel:+27137663253">3253</a> /
+              <a href="tel:+27137663031">3031</a>
+            </td>
+          </tr>
+          <tr>
+            <td>North West</td>
+            <td>
+              <a href="tel:+27183873434">(018) 387 3434</a> /
+              <a href="tel:+27183870255">0255</a> /
+              <a href="tel:+27183873497">3497</a> /
+              <a href="tel:+27183870281">0281</a>
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+    </div>
+
+    <!-- New / Returning student choice -->
+    <div class="buttons" style="margin-top:20px;">
+      <button class="primary" onclick="goToStep(2)">New Report</button>
+    </div>
+
+    <hr>
+
+    <h3>Returning Student</h3>
+    <input type="text" id="loginPIN" placeholder="Enter your PIN" />
+    <button class="secondary" onclick="studentLogin()">Login</button>
+    <p id="loginMessage"></p>
+  </div>
+</section>
 
     <!-- STEP 2 -->
     <section class="step hidden" id="step2">
       <div class="card">
         <h2>What are you reporting?</h2>
-        <label><input type="radio" name="abuse" value="sexual"> Sexual abuse</label>
-        <label><input type="radio" name="abuse" value="physical"> Physical abuse</label>
-        <label><input type="radio" name="abuse" value="both"> Both / Not sure</label>
+        <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px; margin-bottom:15px;">
+          <legend style="font-weight:bold;">Type of abuse</legend>
+          <p>Please select the type of abuse you are reporting.</p>
+          <label><input type="radio" name="abuse" value="sexual"> Sexual abuse</label>
+          <label><input type="radio" name="abuse" value="physical"> Physical abuse</label>
+          <label><input type="radio" name="abuse" value="emotional"> Emotional abuse</label>
+          <!-- Added for inclusivity and completeness -->
+          <label><input type="radio" name="abuse" value="other"> Other</label>
+          <label><input type="radio" name="abuse" value="prefer_not_to_say"> Prefer not to say</label>
+        </fieldset>
         <div class="buttons">
-          <button class="secondary" onclick="prevStep(1)">Back</button>
-          <button class="primary" onclick="nextStep(3)">Next</button>
+          <button class="secondary" onclick="goToStep(1)">Back</button>
+          <button class="primary" onclick="validateAbuseAndNext()">Next</button>
         </div>
       </div>
     </section>
@@ -83,8 +210,12 @@
     <section class="step hidden" id="step3">
       <div class="card">
         <h2>Reporter Role</h2>
+        <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px; margin-bottom:15px;">
+          <legend style="font-weight:bold;">Your role</legend>
+          <p>Are you the victim/survivor, an observer, or a trusted adult reporting on behalf of a child?</p>
         <label><input type="radio" name="role" value="victim"> I am the victim/survivor</label>
         <label><input type="radio" name="role" value="observer"> I am an observer</label>
+        <label><input type="radio" name="role" value="trusted_adult"> I am a trusted adult reporting on behalf of a child</label>
         <div id="minorQuestion" class="hidden">
           <p>Are you under 18?</p>
           <label><input type="radio" name="minor" value="yes"> Yes</label>
@@ -94,9 +225,10 @@
             You may still continue on your own if no adult is available.
           </div>
         </div>
+        </fieldset>
         <div class="buttons">
-          <button class="secondary" onclick="prevStep(2)">Back</button>
-          <button class="primary" onclick="nextStep(4)">Next</button>
+          <button class="secondary" onclick="goToStep(2)">Back</button>
+          <button class="primary" onclick="validateRoleAndNext()">Next</button>
         </div>
       </div>
     </section>
@@ -105,83 +237,162 @@
     <section class="step hidden" id="step4">
       <div class="card">
         <h2>Use this platform responsibly</h2>
+        <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px; margin-bottom:15px;">
+          <legend style="font-weight:bold;">Rules</legend>
+          <ul>
+            <li>Only report abuse related to schools or education.</li>
+            <li>Do not include names or identifying details of victims, perpetrators, or witnesses in your description.</li>
+            <li>Do not share explicit images or videos of abuse.</li>
+            <li>Do not share personal information about yourself or others unless you choose to identify yourself later.</li>
+            <li>Do not use this platform for bullying, harassment, or false reports.</li>
+          </ul>
         <p>Reports are reviewed by district safeguarding staff.<br>
         Intentionally false reports or misuse may cause harm and may be unlawful.<br>
-        If you are in immediate danger, call 10111 or 116.</p>
-        <label><input type="checkbox"> I understand the rules and the risks of false reporting.</label>
+        If you are in immediate danger, call <a href="tel:10111">10111</a> or <a href="tel:116">116</a>.</p>
+        <label><input type="checkbox" id="rulesCheckbox"> I understand the rules and the risks of false reporting.</label>
         <div class="buttons">
-          <button class="secondary" onclick="prevStep(3)">Back</button>
-          <button class="primary" onclick="nextStep(5)">Next</button>
-        </div>
+          <button class="secondary" onclick="goToStep(3)">Back</button>
+          <button class="primary" onclick="validateRulesAndNext()">Next</button>        </div>
       </div>
     </section>
 
-    <!-- STEP 5 -->
-    <section class="step hidden" id="step5">
-      <div class="card">
-        <h2>How should we identify you?</h2>
-        <label><input type="radio" name="identity" value="anon"> Stay Anonymous (recommended)</label>
-        <label><input type="radio" name="identity" value="named"> Share my Name</label>
-        <div id="identityDetails" class="hidden">
-          <label>Full name (optional): <input type="text"></label>
-          <label>Preferred contact:
-            <select>
-              <option>SMS</option><option>WhatsApp</option><option>Email</option><option>No contact</option>
-            </select>
-          </label>
-        </div>
-        <div class="buttons">
-          <button class="secondary" onclick="prevStep(4)">Back</button>
-          <button class="primary" onclick="nextStep(6)">Next</button>
-        </div>
+<!-- STEP 5 -->
+<section class="step hidden" id="step5">
+  <div class="card">
+    <h2>How should we identify you?</h2>
+    <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px; margin-bottom:15px;">
+      <legend style="font-weight:bold;">Identity</legend>
+      <p>You can stay anonymous or share your name and contact details if you want a follow-up.</p>
+
+      <label>
+        <input type="radio" name="identity" value="anon"> Stay Anonymous (recommended)
+      </label>
+      <label>
+        <input type="radio" name="identity" value="named"> Share my Name (contact details optional)
+      </label>
+
+      <div id="identityDetails" class="hidden" style="margin-top:10px; padding:10px; border:1px solid #eee; border-radius:6px;">
+        <label>Full name (optional): <input type="text" name="full_name"></label>
+        <label>Preferred contact:
+          <select name="preferred_contact">
+            <option value="sms">SMS</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="email">Email</option>
+            <option value="no_contact">No contact</option>
+          </select>
+        </label>
+        <label>Contact details (optional): 
+          <input type="text" name="contact_details" placeholder="Phone number or email">
+        </label>
       </div>
-    </section>
+    </fieldset>
+
+    <div class="buttons">
+      <button class="secondary" onclick="goToStep(4)">Back</button>
+      <button class="primary" onclick="validateIdentityAndNext()">Next</button>
+    </div>
+  </div>
+</section>
 
     <!-- STEP 6 -->
     <section class="step hidden" id="step6">
       <div class="card">
         <h2>Incident Details</h2>
-        <label>When did it happen?<br>
-          <input type="date"> <input type="time"> <br>
-          <small>Or select “Not sure”</small>
-        </label>
-        <label>Where did it happen? <input type="text" placeholder="School or location"></label>
-        <label>District <select><option>Eastern Cape</option><option>Western Cape</option></select></label>
-        <label>Describe what happened <textarea rows="4"></textarea></label>
-        <label>Who was involved?
-          <select>
-            <option>Teacher</option><option>Staff</option><option>Learner</option><option>Other</option><option>Prefer not to say</option>
-          </select>
-        </label>
-        <label>Urgency:
-          <select>
-            <option>Immediate danger</option><option>Ongoing risk</option><option>Past incident</option>
-          </select>
-        </label>
-        <label>Is a safe adult with you now? 
-          <input type="radio" name="adult" value="yes"> Yes
-          <input type="radio" name="adult" value="no"> No
-        </label>
-        <div class="buttons">
-          <button class="secondary" onclick="prevStep(5)">Back</button>
-          <button class="primary" onclick="nextStep(7)">Next</button>
-        </div>
-      </div>
-    </section>
+        <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px; margin-bottom:15px;">
+          <legend style="font-weight:bold;">Please provide as much detail as you can.</legend>
+          <p>Do not include names or identifying details of victims, perpetrators, or witnesses in your description.</p>
+
+          <label>
+  When did it happen? <span style="color:#e00;">(required unless “not sure”)</span><br>
+  <input type="date" name="incident_date" id="incidentDate"> 
+  <input type="time" name="incident_time" id="incidentTime"> 
+  <br>
+  <small>
+    Or tick if you are not sure: 
+    <input type="checkbox" id="notSureDate" onchange="toggleDateTimeFields(this)">
+  </small>
+</label>
+
+
+      <label>Where did it happen?</label>
+
+<label>Province <span style="color:#e00;">(required)</span>
+  <select id="province" name="province" onchange="populateDistricts()">
+    <option value="">-- Select Province --</option>
+    <option value="eastern_cape">Eastern Cape</option>
+    <option value="western_cape">Western Cape</option>
+    <option value="gauteng">Gauteng</option>
+    <!-- add more provinces as needed -->
+  </select>
+</label>
+
+<label>District <span style="color:#e00;">(required)</span>
+  <select id="district" name="district">
+    <option value="">-- Select District --</option>
+    <!-- Populated dynamically -->
+  </select>
+</label>
+
+<label>School or place within district <span style="color:#e00;">(required)</span>
+  <input type="text" name="location" placeholder="Enter school name or location">
+</label>
+
+
+      <label>Describe what happened <span style="color:#e00;">(50–1000 chars)</span>
+        <textarea name="description" rows="4" maxlength="1000" oninput="updateCharCount(this)"></textarea>
+        <small id="descCounter">0 / 1000</small>
+      </label>
+
+      <label>Who was involved?
+        <select name="involved">
+          <option value="">-- Select --</option>
+          <option>Teacher</option>
+          <option>Staff</option>
+          <option>Learner</option>
+          <option>Other</option>
+          <option>Prefer not to say</option>
+        </select>
+      </label>
+
+      <label>Urgency: <span style="color:#e00;">(required)</span>
+        <select name="urgency">
+          <option value="">-- Select --</option>
+          <option>Immediate danger</option>
+          <option>Ongoing risk</option>
+          <option>Past incident</option>
+        </select>
+      </label>
+
+      <label>Is a safe adult with you now? (if under 18)<br>
+        <input type="radio" name="adult" value="yes"> Yes
+        <input type="radio" name="adult" value="no"> No
+      </label>
+    </fieldset>
+
+    <div class="buttons">
+      <button class="secondary" onclick="goToStep(5)">Back</button>
+      <button class="primary" onclick="validateIncidentAndNext()">Next</button>
+    </div>
+  </div>
+</section>
 
     <!-- STEP 7 -->
     <section class="step hidden" id="step7">
       <div class="card">
         <h2>Do you have any evidence?</h2>
+         <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px;">
+      <legend style="font-weight:bold;">Evidence</legend>
         <p>You may upload photos, videos, audio, or documents.<br>
         Hidden data is removed and files are scanned for safety.</p>
-        <input type="file" multiple>
+        <input type="file" id="evidenceInput" multiple>
+<div id="preview" style="margin-top:10px; display:flex; flex-wrap:wrap; gap:10px;"></div>
         <label><input type="checkbox"> I confirm this evidence is lawful for me to share.</label>
         <label><input type="checkbox"> Blur names/faces/crests where possible.</label>
         <div class="buttons">
-          <button class="secondary" onclick="prevStep(6)">Back</button>
-          <button class="primary" onclick="nextStep(8)">Next</button>
+          <button class="secondary" onclick="goToStep(6)">Back</button>
+          <button class="primary" onclick="goToStep(8)">Next</button>
         </div>
+         </fieldset>
       </div>
     </section>
 
@@ -189,95 +400,524 @@
     <section class="step hidden" id="step8">
       <div class="card">
         <h2>Review & Submit</h2>
-        <div class="summary">
-          <p><b>Abuse type:</b> Sexual</p>
-          <p><b>Reporter role:</b> Victim</p>
-          <p><b>District:</b> Eastern Cape</p>
-          <p><b>Description length:</b> 200 chars</p>
-          <p><b>Attachments:</b> Yes</p>
+        <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px; margin-bottom:15px;">
+          <legend style="font-weight:bold;">Final Check</legend>
+          <p>Please review your report before submitting. You cannot change it later.</p>
+          <label><input type="checkbox" id="finalCheck"> I confirm that I have not included names or identifying details of victims, perpetrators, or witnesses in my description.</label>
+        <div class="summary" id="reviewSummary">
+          <!-- populated dynamically -->
         </div>
+        <div id="reviewContent" class="hidden"></div> <!-- used for saved-report preview -->
         <div class="buttons">
-          <button class="secondary" onclick="prevStep(7)">Back</button>
-          <button class="primary" onclick="nextStep(9)">Submit</button>
+          <button class="secondary" onclick="goToStep(7)">Back</button>
+<button class="primary" onclick="submitReport()">Submit</button>
         </div>
+          </fieldset>
       </div>
     </section>
 
     <!-- STEP 9 -->
-    <section class="step hidden" id="step9">
-      <div class="card">
-        <h2>Ticket Issued (Success)</h2>
-        <p><b>Ticket:</b> EC-ALF-2025-000123</p>
-        <p><b>PIN:</b> 3487 (keep this safe — shown only once)</p>
-        <p><b>Assigned to:</b> Alfred Nzo District</p>
-        <p>A District Inspector will be assigned.</p>
-        <div class="buttons">
-          <button class="primary" onclick="nextStep(10)">Track Case</button>
-          <button class="secondary" onclick="window.location='https://www.google.com'">Exit Safely</button>
-        </div>
+<section class="step hidden" id="step9">
+  <div class="card">
+    <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px;">
+      <legend style="font-weight:bold;">Ticket Issued</legend>
+      <h2>Your report has been submitted successfully!</h2>
+      <p>Your ticket number is: <strong id="ticketNumber">#123456</strong></p>
+      <p>Your Student PIN (for tracking): <b id="studentPIN"></b></p>
+      <p>Keep these numbers safe to track your case.</p>
+      <div class="buttons">
+        <button class="secondary" onclick="goToStep(8)">Back</button>
+        <button class="primary" onclick="goToStep(10)">Track Case</button>
+        <button class="primary" onclick="downloadPDF()">Download Receipt (PDF)</button>
       </div>
-    </section>
+    </fieldset>
+  </div>
+</section>
+
 
     <!-- STEP 10 -->
-    <section class="step hidden" id="step10">
-      <div class="card">
-        <h2>Track Case</h2>
-        <label>Ticket Number: <input type="text"></label>
-        <label>PIN: <input type="text"></label>
-        <p><b>Timeline:</b></p>
-        <ul>
-          <li>Submitted</li>
-          <li>Acknowledged</li>
-          <li>Inspector Assigned (Nomsa M.)</li>
-          <li>In Review</li>
-          <li>Referred</li>
-          <li>Actioned</li>
-          <li>Monitoring</li>
-          <li>Closed</li>
-        </ul>
-        <div class="buttons">
-          <button class="secondary" onclick="prevStep(9)">Back</button>
-          <button class="primary">Add Info</button>
-        </div>
+<section class="step hidden" id="step10">
+  <div class="card">
+    <fieldset style="border:1px solid #ccc; border-radius:6px; padding:10px;">
+      <legend style="font-weight:bold;">Track Case</legend>
+      <h2>Track Your Case</h2>
+      <p>Enter your ticket number to check the status of your report.</p>
+      
+      <input type="text" id="trackInput" placeholder="Enter Ticket Number" style="width:100%; padding:8px; margin-bottom:10px;">
+      <button class="primary" onclick="trackCase()">Check Status</button>
+      
+      <div id="caseStatus" style="margin-top:15px; font-weight:bold;"></div>
+      
+      <div class="buttons">
+        <button class="secondary" onclick="goToStep(9)">Back</button>
       </div>
-    </section>
+    </fieldset>
+  </div>
+</section>
   </main>
 
   <script>
-    function nextStep(n) {
-      document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
-      document.getElementById('step' + n).classList.remove('hidden');
-    }
-    function prevStep(n) { nextStep(n); }
+// --- Consolidated JS: deduped, fixed flows, small UX/validation improvements ---
+(function(){
+  // State
+  let currentReport = {};
 
-    // dynamic behavior
-    document.querySelectorAll('input[name="role"]').forEach(el => {
-      el.addEventListener('change', e => {
-        if (e.target.value === "victim") {
-          document.getElementById('minorQuestion').classList.remove('hidden');
+  // Districts data by province
+  const districtsByProvince = {
+    "eastern_cape": [
+      "Alfred Nzo East",
+      "Alfred Nzo West",
+      "Amatole East",
+      "Amatole West",
+      "Buffalo City Municipality",
+      "Chris Hani East",
+      "Chris Hani West",
+      "Joe Gqabi",
+      "Nelson Mandela Bay Municipality",
+      "OR Tambo Coastal",
+      "OR Tambo Inland",
+      "Sarah Baartman"
+    ],
+    "western_cape": [
+      "Cape Winelands",
+      "Central Karoo",
+      "Eden",
+      "Overberg",
+      "West Coast",
+      "Metro South",
+      "Metro North",
+      "Metro East"
+    ],
+    "gauteng": [
+      "Johannesburg East",
+      "Johannesburg West",
+      "Ekurhuleni North",
+      "Ekurhuleni South",
+      "Tshwane North",
+      "Tshwane South",
+      "Sedibeng East",
+      "Sedibeng West",
+      "West Rand"
+    ]
+  };
+
+  // Helpers
+  function formatValueForDisplay(value) {
+    if (!value) return "Not provided";
+    return String(value).replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  }
+
+  function goToStep(n) {
+    document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+    const step = document.getElementById('step' + n);
+    if (step) step.classList.remove('hidden');
+    updateProgress(n);
+    if (n === 8) populateReview();
+  }
+
+  function updateProgress(n) {
+    const totalSteps = 10; // adjust if you add more steps
+    const percent = ((n - 1) / (totalSteps - 1)) * 100;
+    document.getElementById("progressBar").style.width = percent + "%";
+  }
+
+  // Validation & navigation
+  function validateAbuseAndNext() {
+    const abuseSelected = document.querySelector('input[name="abuse"]:checked');
+    if (!abuseSelected) { alert("Please select the type of abuse."); return; }
+    goToStep(3);
+  }
+
+  function validateRoleAndNext() {
+    const roleSelected = document.querySelector('input[name="role"]:checked');
+    if (!roleSelected) { alert("Please select your reporter role."); return; }
+    // show minor question for victim or trusted_adult
+    const minorQuestion = document.getElementById('minorQuestion');
+    if (roleSelected.value === 'victim' || roleSelected.value === 'trusted_adult') {
+      minorQuestion.classList.remove('hidden');
+    } else {
+      minorQuestion.classList.add('hidden');
+    }
+    goToStep(4);
+  }
+
+  function validateRulesAndNext() {
+    const rulesChecked = document.getElementById('rulesCheckbox').checked;
+    if (!rulesChecked) { alert("Please acknowledge the rules."); return; }
+    goToStep(5);
+  }
+
+  // Identity
+  document.querySelectorAll('input[name="identity"]').forEach(el => {
+    el.addEventListener('change', e => {
+      if (e.target.value === "named") {
+        document.getElementById('identityDetails').classList.remove('hidden');
+      } else {
+        document.getElementById('identityDetails').classList.add('hidden');
+      }
+    });
+  });
+
+  function validateIdentityAndNext() {
+    const identitySelected = document.querySelector('input[name="identity"]:checked');
+    if (!identitySelected) { alert("Please select how you wish to be identified before continuing."); return; }
+
+    if (identitySelected.value === "named") {
+      const preferred = document.querySelector('select[name="preferred_contact"]').value;
+      const details = document.querySelector('input[name="contact_details"]').value.trim();
+      if (preferred !== "no_contact" && details === "") {
+        alert("Please provide contact details or select 'No contact'.");
+        return;
+      }
+    }
+    goToStep(6);
+  }
+
+  // Minor banner
+  document.querySelectorAll('input[name="minor"]').forEach(el => {
+    el.addEventListener('change', e => {
+      document.getElementById('minorBanner').classList.toggle('hidden', e.target.value !== 'yes');
+    });
+  });
+
+  // Date/time toggle
+  window.toggleDateTimeFields = function(checkbox) {
+    const dateInput = document.getElementById("incidentDate");
+    const timeInput = document.getElementById("incidentTime");
+
+    if (checkbox.checked) {
+      dateInput.disabled = true;
+      timeInput.disabled = true;
+      dateInput.value = "";
+      timeInput.value = "";
+    } else {
+      dateInput.disabled = false;
+      timeInput.disabled = false;
+    }
+  }
+
+  function updateCharCount(textarea) {
+    const counter = document.getElementById("descCounter");
+    counter.textContent = textarea.value.length + " / 1000";
+  }
+  window.updateCharCount = updateCharCount;
+
+  function populateDistricts() {
+    const provinceSelect = document.getElementById("province");
+    const districtSelect = document.getElementById("district");
+    const selectedProvince = provinceSelect.value;
+
+    // Clear current options
+    districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+
+    if (selectedProvince && districtsByProvince[selectedProvince]) {
+      // Sort alphabetically
+      const districts = districtsByProvince[selectedProvince].slice().sort();
+
+      districts.forEach(district => {
+        const option = document.createElement("option");
+        option.value = district;
+        option.textContent = district;
+        districtSelect.appendChild(option);
+      });
+    }
+  }
+  window.populateDistricts = populateDistricts;
+
+  function validateIncidentAndNext() {
+    const notSure = document.getElementById("notSureDate").checked;
+    const date = document.querySelector('input[name="incident_date"]').value;
+    const time = document.querySelector('input[name="incident_time"]').value;
+    const location = document.querySelector('input[name="location"]').value.trim();
+    const district = document.querySelector('select[name="district"]').value;
+    const description = document.querySelector('textarea[name="description"]').value.trim();
+    const urgency = document.querySelector('select[name="urgency"]').value;
+    const isMinor = document.querySelector('input[name="minor"]:checked')?.value === "yes";
+    const adultAnswer = document.querySelector('input[name="adult"]:checked');
+
+    if (!notSure && !date && !time) {
+      alert("Please provide a date and/or time, or tick 'Not sure'.");
+      return;
+    }
+    if (!location) {
+      alert("Please enter where the incident happened.");
+      return;
+    }
+    if (!district) {
+      alert("Please select a district.");
+      return;
+    }
+    if (description.length < 50) {
+      alert("Description is too short. Please provide at least 50 characters.");
+      return;
+    }
+    if (description.length > 1000) {
+      alert("Description is too long (max 1000 chars).");
+      return;
+    }
+    if (!urgency) {
+      alert("Please select the urgency of the incident.");
+      return;
+    }
+    if (isMinor && !adultAnswer) {
+      alert("Since you indicated you are under 18, please answer if a safe adult is with you.");
+      return;
+    }
+
+    goToStep(7);
+  }
+
+  // Evidence preview
+  const evidenceInput = document.getElementById('evidenceInput');
+  if (evidenceInput) {
+    evidenceInput.addEventListener('change', function(event) {
+      const files = event.target.files;
+      const preview = document.getElementById('preview');
+      preview.innerHTML = ''; // clear old previews
+
+      Array.from(files).forEach(file => {
+        const item = document.createElement('div');
+        item.classList.add('preview-item');
+
+        if (file.type.startsWith('image/')) {
+          const img = document.createElement('img');
+          img.src = URL.createObjectURL(file);
+          item.appendChild(img);
+        } else if (file.type.startsWith('video/')) {
+          const video = document.createElement('video');
+          video.src = URL.createObjectURL(file);
+          video.controls = true;
+          item.appendChild(video);
+        } else if (file.type.startsWith('audio/')) {
+          const audio = document.createElement('audio');
+          audio.src = URL.createObjectURL(file);
+          audio.controls = true;
+          item.appendChild(audio);
         } else {
-          document.getElementById('minorQuestion').classList.add('hidden');
+          item.textContent = file.name;
         }
+
+        preview.appendChild(item);
       });
     });
-    document.querySelectorAll('input[name="minor"]').forEach(el => {
-      el.addEventListener('change', e => {
-        if (e.target.value === "yes") {
-          document.getElementById('minorBanner').classList.remove('hidden');
-        } else {
-          document.getElementById('minorBanner').classList.add('hidden');
-        }
-      });
-    });
-    document.querySelectorAll('input[name="identity"]').forEach(el => {
-      el.addEventListener('change', e => {
-        if (e.target.value === "named") {
-          document.getElementById('identityDetails').classList.remove('hidden');
-        } else {
-          document.getElementById('identityDetails').classList.add('hidden');
-        }
-      });
-    });
+  }
+
+  // PDF receipt
+  function downloadPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const ticketNum = document.getElementById("ticketNumber").textContent;
+    const date = new Date().toLocaleString();
+
+    doc.setFontSize(18);
+    doc.text("Anonymous Report Receipt", 20, 20);
+
+    doc.setFontSize(12);
+    doc.text(`Ticket Number: ${ticketNum}`, 20, 40);
+    doc.text(`Date Submitted: ${date}`, 20, 50);
+    doc.text("Keep this receipt safe to track your report.", 20, 70);
+
+    doc.save(`Report_${ticketNum}.pdf`);
+  }
+  window.downloadPDF = downloadPDF;
+
+  // Tracking
+  function trackCase() {
+    const ticketInput = document.getElementById("trackInput").value.trim();
+    const caseStatus = document.getElementById("caseStatus");
+
+    if (!ticketInput) {
+      caseStatus.textContent = "⚠️ Please enter a ticket number.";
+      caseStatus.style.color = "red";
+      return;
+    }
+
+    let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+    let found = tickets.find(t => t.number === ticketInput);
+
+    if (found) {
+      caseStatus.textContent = `✅ Ticket ${found.number} Status: ${found.status}`;
+      caseStatus.style.color = "green";
+    } else {
+      caseStatus.textContent = "❌ Ticket not found. Please check your number.";
+      caseStatus.style.color = "red";
+    }
+  }
+  window.trackCase = trackCase;
+
+  // Ticket and PIN generation
+  function generateTicketNumber() {
+    return "PP-" + Math.floor(100000 + Math.random() * 900000);
+  }
+  function generatePIN() {
+    return Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit PIN
+  }
+
+  // Save report in localStorage by PIN + index ticket list
+  function saveReport(reportData) {
+    const pin = generatePIN();
+    localStorage.setItem(pin, JSON.stringify(reportData));
+
+    // Also store in tickets array for tracking lookup
+    let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+    const ticketNum = generateTicketNumber();
+    tickets.push({ number: ticketNum, status: "Submitted - Pending Review", pin });
+    localStorage.setItem("tickets", JSON.stringify(tickets));
+
+    return { pin, ticketNum };
+  }
+
+  // Submit flow: validate final check, save report, show ticket & PIN, go to step 9
+  function submitReport() {
+    if (!document.getElementById("finalCheck").checked) {
+      alert("Please confirm that your report has no identifying details before submitting.");
+      return;
+    }
+
+    // Ensure we have a review snapshot
+    populateReview();
+
+    const { pin, ticketNum } = saveReport(currentReport);
+
+    // Show PIN to student and ticket
+    const summaryDiv = document.getElementById("reviewSummary");
+    summaryDiv.innerHTML += `\n      <hr>\n      <p style="color:green; font-weight:bold;">\n        ✅ Your report has been submitted successfully.<br>\n        Your tracking PIN is: <span style="font-size:1.2em;">${pin}</span>\n      </p>\n      <p>Please keep this PIN safe. You can log in later to track your report.</p>\n    `;
+
+    // Update confirmation step
+    document.getElementById("ticketNumber").textContent = ticketNum;
+    document.getElementById("studentPIN").textContent = pin.slice(-4);
+
+    goToStep(9);
+  }
+  window.submitReport = submitReport;
+
+  // Student login: support logging in by PIN (saved report key)
+  function studentLogin() {
+    const pin = document.getElementById("loginPIN").value.trim();
+    const loginMessage = document.getElementById("loginMessage");
+
+    if (!pin) {
+      loginMessage.textContent = "Please enter your PIN.";
+      loginMessage.style.color = "red";
+      return;
+    }
+
+    const report = localStorage.getItem(pin);
+
+    if (report) {
+      const data = JSON.parse(report);
+      loginMessage.style.color = "green";
+      loginMessage.textContent = "✅ Login successful! Loading your ticket...";
+
+      // Show their saved report on review page (Step 8 for example)
+      populateSavedReport(data, pin);
+      setTimeout(() => goToStep(8), 700);
+    } else {
+      loginMessage.style.color = "red";
+      loginMessage.textContent = "❌ Invalid PIN. Please try again.";
+    }
+  }
+  window.studentLogin = studentLogin;
+
+  function populateSavedReport(data, pin) {
+    const review = document.getElementById("reviewContent");
+    if (!review) return;
+    review.innerHTML = `\n      <h3>Saved Report</h3>\n      <p><strong>PIN:</strong> ${pin}</p>\n      <p><strong>Abuse Type:</strong> ${data.abuseType || 'N/A'}</p>\n      <p><strong>Reporter Role:</strong> ${data.reporterRole || 'N/A'}</p>\n      <p><strong>Province:</strong> ${data.province || 'N/A'}</p>\n      <p><strong>District:</strong> ${data.district || 'N/A'}</p>\n      <p><strong>Location:</strong> ${data.location || 'N/A'}</p>\n      <p><strong>Description:</strong> ${data.description || 'N/A'}</p>\n      <p><strong>Who was involved:</strong> ${data.whoInvolved || 'N/A'}</p>\n      <p><strong>Urgency:</strong> ${data.urgency || 'N/A'}</p>\n      <p><strong>Identity:</strong> ${data.identity || 'N/A'}</p>\n      <p><strong>Contact Info:</strong> ${data.contact || 'N/A'}</p>\n      <p><strong>Attachments:</strong> ${data.attachments || 'N/A'}</p>\n    `;
+  }
+
+  // Review population
+  function populateReview() {
+    const abuse = formatValueForDisplay(document.querySelector('input[name="abuse"]:checked')?.value);
+    const role = formatValueForDisplay(document.querySelector('input[name="role"]:checked')?.value);
+    const province = formatValueForDisplay(document.querySelector('select[name="province"]').value);
+    const district = formatValueForDisplay(document.querySelector('select[name="district"]').value);
+    const location = document.querySelector('input[name="location"]').value.trim() || "Not provided";
+    const description = document.querySelector('textarea[name="description"]').value.trim() || "Not provided";
+    const involved = formatValueForDisplay(document.querySelector('select[name="involved"]').value);
+    const urgency = formatValueForDisplay(document.querySelector('select[name="urgency"]').value);
+
+    let identityType = document.querySelector('input[name="identity"]:checked')?.value || "anon";
+    identityType = (identityType === "anon") ? "Anonymous" : formatValueForDisplay(identityType);
+
+    let contactInfo = "N/A";
+    if (identityType === "Named") {
+      const fullName = document.querySelector('input[name="full_name"]').value.trim() || "N/A";
+      const preferred = formatValueForDisplay(document.querySelector('select[name="preferred_contact"]').value);
+      const details = document.querySelector('input[name="contact_details"]').value.trim() || "N/A";
+      contactInfo = `${fullName} via ${preferred}: ${details}`;
+    }
+
+    const attachments = document.getElementById("evidenceInput")?.files.length > 0 ? "Yes" : "No";
+
+    // Save in global object (so submitReport() can use it)
+    currentReport = {
+      abuseType: abuse,
+      reporterRole: role,
+      province,
+      district,
+      location,
+      description,
+      whoInvolved: involved,
+      urgency,
+      identity: identityType,
+      contact: contactInfo,
+      attachments
+    };
+
+    const summaryDiv = document.getElementById("reviewSummary");
+    summaryDiv.innerHTML = `\n      <p><b>Abuse type:</b> ${abuse}</p>\n      <p><b>Reporter role:</b> ${role}</p>\n      <p><b>Province:</b> ${province}</p>\n      <p><b>District:</b> ${district}</p>\n      <p><b>Location:</b> ${location}</p>\n      <p><b>Description:</b> ${description}</p>\n      <p><b>Who was involved:</b> ${involved}</p>\n      <p><b>Urgency:</b> ${urgency}</p>\n      <p><b>Identity:</b> ${identityType}</p>\n      <p><b>Contact Info:</b> ${contactInfo}</p>\n      <p><b>Attachments:</b> ${attachments}</p>\n    `;
+  }
+
+  // Expose some functions globally for inline onclicks
+  window.goToStep = goToStep;
+  window.validateAbuseAndNext = validateAbuseAndNext;
+  window.validateRoleAndNext = validateRoleAndNext;
+  window.validateRulesAndNext = validateRulesAndNext;
+  window.validateIdentityAndNext = validateIdentityAndNext;
+  window.validateIncidentAndNext = validateIncidentAndNext;
+
+  // Initial progress
+  updateProgress(1);
+})();
   </script>
+<script>
+/* Small override: enforce date limits and require PIN for tracking */
+(function(){
+  const dateInput = document.getElementById('incidentDate');
+  if (dateInput) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth()+1).padStart(2,'0');
+    const dd = String(today.getDate()).padStart(2,'0');
+    dateInput.max = `${yyyy}-${mm}-${dd}`;
+    dateInput.min = '1900-01-01';
+  }
+
+  // Override trackCase to require ticket + PIN (safe to reassign)
+  window.trackCase = function(){
+    const ticketInputEl = document.getElementById("trackInput");
+    const pinInputEl = document.getElementById("trackPIN");
+    const caseStatus = document.getElementById("caseStatus");
+
+    const ticketInput = ticketInputEl ? ticketInputEl.value.trim() : '';
+    const pinInput = pinInputEl ? pinInputEl.value.trim() : '';
+
+    if (!ticketInput || !pinInput) {
+      if (caseStatus) { caseStatus.textContent = "⚠️ Please enter both your ticket number and PIN."; caseStatus.style.color = "red"; }
+      return;
+    }
+
+    let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+    let found = tickets.find(t => t.number === ticketInput && t.pin === pinInput);
+
+    if (found) {
+      if (caseStatus) { caseStatus.textContent = `✅ Ticket ${found.number} Status: ${found.status}`; caseStatus.style.color = "green"; }
+    } else {
+      if (caseStatus) { caseStatus.textContent = "❌ Ticket not found or PIN mismatch. Please check your details."; caseStatus.style.color = "red"; }
+    }
+  };
+})();
+</script>
 </body>
 </html>
