@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Abuse Reporting Prototype</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; }
+    header { background: #004080; color: white; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-size: 16px; margin: 0; }
+    header button { background: #ff6666; border: none; padding: 6px 12px; border-radius: 4px; color: white; cursor: pointer; }
+    main { padding: 20px; }
+    .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .hidden { display: none; }
+    .buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+    button { padding: 10px 16px; border: none; border-radius: 4px; cursor: pointer; }
+    button.primary { background: #004080; color: white; }
+    button.secondary { background: #ccc; }
+    label { display: block; margin: 10px 0; }
+    input[type="text"], input[type="date"], input[type="time"], textarea, select { width: 100%; padding: 8px; margin-top: 5px; }
+    .emergency { background: #ffe6e6; padding: 10px; border-radius: 6px; }
+    .summary p { margin: 5px 0; }
+    ul { margin: 5px 0 0 20px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SafeReport App</h1>
+    <div>
+      <select><option>EN</option><option>Xhosa</option><option>Zulu</option></select>
+      <button onclick="window.location='https://www.google.com'">Quick Exit</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- STEP 1 -->
+    <section class="step" id="step1">
+      <div class="card">
+        <h2>Welcome & Safety</h2>
+        <p>Use this app to report sexual or physical abuse directly to your district office.<br>
+        You’ll receive a ticket number to track your case.<br>
+        If you are in danger right now, please call the emergency numbers below.</p>
+        <div class="emergency">
+          <p><b>10111</b> — Police Emergency<br>
+          <b>116</b> — Childline SA</p>
+          <details>
+            <summary>Provincial Safeguarding Numbers</summary>
+            <ul>
+              <li>Eastern Cape — 0800 428 428 / SMS "help" to 31531</li>
+              <li>Western Cape — 0800 220 250</li>
+              <li>KwaZulu-Natal — 0800 005 250</li>
+              <li>Gauteng — 0800 428 428</li>
+              <li>Free State — 0800 228 822</li>
+              <li>Northern Cape — 0800 228 822</li>
+              <li>Limpopo — 0800 222 222</li>
+              <li>Mpumalanga — 0800 222 111</li>
+              <li>North West — 0800 220 250</li>
+            </ul>
+          </details>
+        </div>
+        <div class="buttons">
+          <span></span>
+          <button class="primary" onclick="nextStep(2)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="step hidden" id="step2">
+      <div class="card">
+        <h2>What are you reporting?</h2>
+        <label><input type="radio" name="abuse" value="sexual"> Sexual abuse</label>
+        <label><input type="radio" name="abuse" value="physical"> Physical abuse</label>
+        <label><input type="radio" name="abuse" value="both"> Both / Not sure</label>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(1)">Back</button>
+          <button class="primary" onclick="nextStep(3)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="step hidden" id="step3">
+      <div class="card">
+        <h2>Reporter Role</h2>
+        <label><input type="radio" name="role" value="victim"> I am the victim/survivor</label>
+        <label><input type="radio" name="role" value="observer"> I am an observer</label>
+        <div id="minorQuestion" class="hidden">
+          <p>Are you under 18?</p>
+          <label><input type="radio" name="minor" value="yes"> Yes</label>
+          <label><input type="radio" name="minor" value="no"> No</label>
+          <div id="minorBanner" class="hidden" style="background:#fff4cc; padding:10px; margin-top:10px;">
+            If possible, ask a trusted adult (parent, guardian, or teacher) to help you.<br>
+            You may still continue on your own if no adult is available.
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(2)">Back</button>
+          <button class="primary" onclick="nextStep(4)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="step hidden" id="step4">
+      <div class="card">
+        <h2>Use this platform responsibly</h2>
+        <p>Reports are reviewed by district safeguarding staff.<br>
+        Intentionally false reports or misuse may cause harm and may be unlawful.<br>
+        If you are in immediate danger, call 10111 or 116.</p>
+        <label><input type="checkbox"> I understand the rules and the risks of false reporting.</label>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(3)">Back</button>
+          <button class="primary" onclick="nextStep(5)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="step hidden" id="step5">
+      <div class="card">
+        <h2>How should we identify you?</h2>
+        <label><input type="radio" name="identity" value="anon"> Stay Anonymous (recommended)</label>
+        <label><input type="radio" name="identity" value="named"> Share my Name</label>
+        <div id="identityDetails" class="hidden">
+          <label>Full name (optional): <input type="text"></label>
+          <label>Preferred contact:
+            <select>
+              <option>SMS</option><option>WhatsApp</option><option>Email</option><option>No contact</option>
+            </select>
+          </label>
+        </div>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(4)">Back</button>
+          <button class="primary" onclick="nextStep(6)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="step hidden" id="step6">
+      <div class="card">
+        <h2>Incident Details</h2>
+        <label>When did it happen?<br>
+          <input type="date"> <input type="time"> <br>
+          <small>Or select “Not sure”</small>
+        </label>
+        <label>Where did it happen? <input type="text" placeholder="School or location"></label>
+        <label>District <select><option>Eastern Cape</option><option>Western Cape</option></select></label>
+        <label>Describe what happened <textarea rows="4"></textarea></label>
+        <label>Who was involved?
+          <select>
+            <option>Teacher</option><option>Staff</option><option>Learner</option><option>Other</option><option>Prefer not to say</option>
+          </select>
+        </label>
+        <label>Urgency:
+          <select>
+            <option>Immediate danger</option><option>Ongoing risk</option><option>Past incident</option>
+          </select>
+        </label>
+        <label>Is a safe adult with you now? 
+          <input type="radio" name="adult" value="yes"> Yes
+          <input type="radio" name="adult" value="no"> No
+        </label>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(5)">Back</button>
+          <button class="primary" onclick="nextStep(7)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 7 -->
+    <section class="step hidden" id="step7">
+      <div class="card">
+        <h2>Do you have any evidence?</h2>
+        <p>You may upload photos, videos, audio, or documents.<br>
+        Hidden data is removed and files are scanned for safety.</p>
+        <input type="file" multiple>
+        <label><input type="checkbox"> I confirm this evidence is lawful for me to share.</label>
+        <label><input type="checkbox"> Blur names/faces/crests where possible.</label>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(6)">Back</button>
+          <button class="primary" onclick="nextStep(8)">Next</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 8 -->
+    <section class="step hidden" id="step8">
+      <div class="card">
+        <h2>Review & Submit</h2>
+        <div class="summary">
+          <p><b>Abuse type:</b> Sexual</p>
+          <p><b>Reporter role:</b> Victim</p>
+          <p><b>District:</b> Eastern Cape</p>
+          <p><b>Description length:</b> 200 chars</p>
+          <p><b>Attachments:</b> Yes</p>
+        </div>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(7)">Back</button>
+          <button class="primary" onclick="nextStep(9)">Submit</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 9 -->
+    <section class="step hidden" id="step9">
+      <div class="card">
+        <h2>Ticket Issued (Success)</h2>
+        <p><b>Ticket:</b> EC-ALF-2025-000123</p>
+        <p><b>PIN:</b> 3487 (keep this safe — shown only once)</p>
+        <p><b>Assigned to:</b> Alfred Nzo District</p>
+        <p>A District Inspector will be assigned.</p>
+        <div class="buttons">
+          <button class="primary" onclick="nextStep(10)">Track Case</button>
+          <button class="secondary" onclick="window.location='https://www.google.com'">Exit Safely</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 10 -->
+    <section class="step hidden" id="step10">
+      <div class="card">
+        <h2>Track Case</h2>
+        <label>Ticket Number: <input type="text"></label>
+        <label>PIN: <input type="text"></label>
+        <p><b>Timeline:</b></p>
+        <ul>
+          <li>Submitted</li>
+          <li>Acknowledged</li>
+          <li>Inspector Assigned (Nomsa M.)</li>
+          <li>In Review</li>
+          <li>Referred</li>
+          <li>Actioned</li>
+          <li>Monitoring</li>
+          <li>Closed</li>
+        </ul>
+        <div class="buttons">
+          <button class="secondary" onclick="prevStep(9)">Back</button>
+          <button class="primary">Add Info</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function nextStep(n) {
+      document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+      document.getElementById('step' + n).classList.remove('hidden');
+    }
+    function prevStep(n) { nextStep(n); }
+
+    // dynamic behavior
+    document.querySelectorAll('input[name="role"]').forEach(el => {
+      el.addEventListener('change', e => {
+        if (e.target.value === "victim") {
+          document.getElementById('minorQuestion').classList.remove('hidden');
+        } else {
+          document.getElementById('minorQuestion').classList.add('hidden');
+        }
+      });
+    });
+    document.querySelectorAll('input[name="minor"]').forEach(el => {
+      el.addEventListener('change', e => {
+        if (e.target.value === "yes") {
+          document.getElementById('minorBanner').classList.remove('hidden');
+        } else {
+          document.getElementById('minorBanner').classList.add('hidden');
+        }
+      });
+    });
+    document.querySelectorAll('input[name="identity"]').forEach(el => {
+      el.addEventListener('change', e => {
+        if (e.target.value === "named") {
+          document.getElementById('identityDetails').classList.remove('hidden');
+        } else {
+          document.getElementById('identityDetails').classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
